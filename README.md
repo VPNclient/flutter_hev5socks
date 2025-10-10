@@ -1,4 +1,4 @@
-# 🚀 VPNclient Driver (vpnclient_driver)
+# 🚀 flutter_vpn_hev5socks
 
 Cross-platform VPN client driver leveraging TUN/TAP devices and SOCKS5 protocol for seamless, secure, and performant network communication across Android, iOS, Windows, Linux, and macOS.
 
@@ -6,8 +6,8 @@ Cross-platform VPN client driver leveraging TUN/TAP devices and SOCKS5 protocol 
 
 ```mermaid
 sequenceDiagram
-    participant App as VPNclient App
-    participant Driver as VPNclient Driver
+    participant App as flutter_vpn_hev5socks
+    participant Driver as Driver
     participant TUN as TUN/TAP
     participant SOCKS as SOCKS5
     
@@ -27,8 +27,8 @@ sequenceDiagram
 ### Clone and Build
 
 ```bash
-git clone https://github.com/VPNclient/vpnclient_driver.git
-cd vpnclient_driver
+git clone https://github.com/VPNclient/flutter_vpn_hev5socks.git
+cd flutter_vpn_hev5socks
 mkdir build
 
 # Static library

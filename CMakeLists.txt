@@ -1,20 +1,59 @@
-cmake_minimum_required(VERSION 3.10)
-project(vpnclient_driver)
+cmake_minimum_required(VERSION 3.15)
+project(hev_socks5 VERSION 1.0.0 LANGUAGES C)
 
-add_library(vpnclient_driver STATIC
-    src/core/driver.c
-    src/core/socks5.c
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+# Опции сборки
+option(BUILD_SHARED_LIBS "Build shared library" ON)
+option(BUILD_EXAMPLES "Build examples" OFF)
+option(BUILD_TESTS "Build tests" OFF)
+
+# Исходные файлы
+set(SOURCES
+    src/core/hev_socks5_c_api.c
 )
 
-if(WIN32)
-    add_library(platform STATIC src/platform/windows/tap_device.c)
-#elseif(ANDROID)
-#    add_library(platform STATIC src/platform/android/tun_device.jni)
-elseif(APPLE)
-    add_library(platform STATIC src/platform/macos/tun_device.c)
-else()
-    add_library(platform STATIC src/platform/linux/tun_device.c)
+# Заголовочные файлы
+set(HEADERS
+    include/hev_socks5_c_api.h
+)
+
+# Создание библиотеки
+add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+
+# Заголовочные директории
+target_include_directories(${PROJECT_NAME}
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+# Линковка с pthread
+find_package(Threads REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
+
+# Установка
+install(TARGETS ${PROJECT_NAME}
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    RUNTIME DESTINATION bin
+)
+
+install(FILES ${HEADERS}
+    DESTINATION include
+)
+
+# Примеры
+if(BUILD_EXAMPLES)
+    add_subdirectory(example)
 endif()
 
-target_include_directories(vpnclient_driver PUBLIC include)
-target_link_libraries(vpnclient_driver PRIVATE platform)
+# Тесты
+if(BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(test)
+endif()

@@ -1,0 +1,25 @@
+name: flutter_vpn_hev5socks
+description: Flutter wrapper for HevSocks5 tunnel - SOCKS5 to TUN device
+version: 1.0.0
+homepage: https://github.com/VPNclient/flutter_vpn_hev5socks
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  ffi: ^2.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  ffigen: ^11.0.0
+
+ffigen:
+  name: HevSocks5Bindings
+  description: Auto-generated bindings for HevSocks5
+  output: 'lib/src/bindings_generated.dart'
+  headers:
+    entry-points:
+      - 'include/hev_socks5_c_api.h'
+
