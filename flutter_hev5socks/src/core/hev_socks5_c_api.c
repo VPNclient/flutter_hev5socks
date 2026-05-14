@@ -256,3 +256,7 @@ const char* hev_socks5_get_last_error(HevSocks5Instance instance) {
     return impl->last_error;
 }
 
+
+
+
+
